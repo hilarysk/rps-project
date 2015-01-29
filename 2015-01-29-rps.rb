@@ -13,10 +13,13 @@ class Player
     @moves = {}
   end
   
-  def add_player(name)
-    :name = name
-    @scores[:name] = 0
-    @moves[:name] = []
+  def add_player(name, *move)
+    player = name.to_sym
+    puts player
+    @scores[player] = 0
+    @moves[player] = move
+    puts @scores
+    puts @moves
   end
   
   def get_moves
