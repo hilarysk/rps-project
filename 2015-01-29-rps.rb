@@ -13,19 +13,18 @@ class Player
     @moves = {}
   end
   
-  def add_player(name, *move)
+  def add_player(name)
     player = name.to_sym
-    puts player
     @scores[player] = 0
+  end
+  
+  def make_move(name, *move) #this populates array, but still need to compare moves against each other.  
+    player = name.to_sym
     @moves[player] = move
-    puts @scores
     puts @moves
   end
   
-  def get_moves
-  end
-  
-  def judge_moves
+  def judge_moves #must put score into @scores
   end
   
   def score_history
