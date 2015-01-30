@@ -1,6 +1,4 @@
 require "pry"
-require "2015-01-29-rps-player-class.rb"
-require "app.rb"
 
 # Class: Game
 #
@@ -63,7 +61,7 @@ class Game
       print "\"#{@move2}\"???? P-A-P-E-R, S-C-I-S-S-O-R-S or R-O-C-K. That's it, #{@app_name2}. #{@app_name1} wins by default of your incompetence."
       @player1.victory_total(1)
     
-    if @move1 == @move2
+    elsif @move1 == @move2
       print "How unoriginal. It's a tie."
 
     elsif @move1 == "rock" && @move2 == "paper"

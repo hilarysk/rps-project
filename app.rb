@@ -25,6 +25,11 @@ if answer == ("yes" || "yeah" || "sure" || "duh" || "maybe" || "why not")
   game.print_rules
 end
 
+
+                ### ABOVE HERE WORKS WITH PERFECT INPUT ###
+#------------------------------------------------------------------------#
+
+
       # puts "All right, what are we thinking? Best out of 3? Best out of 5? Give me a number."
       # match_num = gets.chomp.to_i
       #
@@ -46,14 +51,9 @@ end
       #     end
       # end
 
-# Collects moves
+# Collects moves and adds moves
 
 game.collect_moves
-
-# Adds moves
-
-@player1.move_total(@move1)
-@player2.move_total(@move2)
 
 # Game result
 
@@ -65,7 +65,7 @@ puts "#{app_name1}, your score is #{@player1.victory_total}."
 puts "#{app_name2}, your score is #{@player2.victory_total}."
 
 puts "Want to see which moves you made? Y or N."
-move_answer = gets.chomp
+move_answer = gets.chomp.downcase
 
 if move_answer == "Y"
   puts "#{app_name1}, you played #{@player1.show_move_total}."
