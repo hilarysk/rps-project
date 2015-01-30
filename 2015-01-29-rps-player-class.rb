@@ -2,13 +2,16 @@ require "pry"
 
 # Class: Player
 #
-# Creates specific player and sets their win tally to 0. 
+# Creates a player and sets their win total to 0; also creates hash to store moves. 
 #
 # Attributes:
-# @name        - Instance variable: represents the player's name
-# @victory_total - Instance variable: represents the player's total number of wins (initialized to 0)
+# @name      - Instance variable: represents the player's name
+# @victories - Hash: stores the player's total number of wins (initialized to 0) as the value to player 
+#              name key
+# @moves     - Hash: stores the player's moves in an array as the value to the player name key
 #
 # Public Methods:
+# #move_total
 # #victory_total
 
 class Player
@@ -20,35 +23,58 @@ class Player
   # name - name of the new player
   #
   # Returns:
-  # the value of @name and @victoryvictory_total
+  # ?
   #
   # State Changes:
-  # Sets @name and @victoryvictory_total
+  # Sets @name, @victories and @moves
+
+  attr_accessor :name, :victories, :moves
   
-  attr_accessor :name, :victory_total 
-  
-  def initialize(name)             
-    @name = name                       
-    @victory_total = 0
+  def initialize(name)
+    @name = name
+    
+    @victories = {}
+    @victories[@name] = 0  
+    
+    @moves = {}
+    @moves[@name] = []             
   end
   
-  
-  # Public: #add_victory
-  # Updates the @victory_total instance variable for the corresponding member @name
+  # Public: #move_total
+  # Updates the array that occupies the value spot in the @moves hash
   #
   # Parameters:
-  # win_num - integer by which @victory_total should increase
+  # move - A string of the move the player made
   #
   # Returns:
-  # The new value of @victory_total?
+  # The value for @moves hash
   #
   # State Changes:
-  # Changes the value of @victory_total
+  # Changes the value in @moves hash
   
-  def add_victory(win_num)
-    @victory_total += win_num.to_f.abs
+  def move_total(move)
+    @individual_move = move.to_s
+    @moves[@name] = @individual_move.push
+    return @moves[@name]
   end
   
+  # Public: #victory_total
+  # Updates the @victories value for the corresponding member player_name
+  #
+  # Parameters:
+  # win_num - Amount by which @victories value should increase
+  #
+  # Returns:
+  # The player's total number of wins
+  #
+  # State Changes:
+  # Changes the value of @victories
+  
+  def victory_total(win_num)
+    @victories[@name] += win_num.abs.to_i
+    return @victories[@name]
+  end
+ 
   
 end
 
