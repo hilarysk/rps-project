@@ -21,10 +21,9 @@ game = Game.new(app_name1, app_name2, @player1, @player2)
 puts "Do you need a refresher on the rules?"
 answer = gets.chomp.downcase
 
-if answer == ("yes" || "yeah" || "sure" || "duh" || "maybe" || "why not")
+if (answer == "yes" || answer == "y") || (answer == "yeah" || answer == "sure") || (answer == "duh" || answer == "maybe") || answer == "why not"
   game.print_rules
 end
-
 
                 ### ABOVE HERE WORKS WITH PERFECT INPUT ###
 #------------------------------------------------------------------------#
@@ -51,9 +50,13 @@ end
       #     end
       # end
 
-# Collects moves and adds moves
+# Collects moves
 
 game.collect_moves
+
+# Add moves to collection
+
+game.add_moves
 
 # Game result
 
@@ -67,9 +70,9 @@ puts "#{app_name2}, your score is #{@player2.victory_total}."
 puts "Want to see which moves you made? Y or N."
 move_answer = gets.chomp.downcase
 
-if move_answer == "Y"
-  puts "#{app_name1}, you played #{@player1.show_move_total}."
-  puts "#{app_name2}, you played #{@player2.show_move_total}."
+if move_answer == "y"
+  puts "#{app_name1}, you played#{@player1.show_move_total}."
+  puts "#{app_name2}, you played#{@player2.show_move_total}."
 else
   puts "No problem. Thanks for playing!"
 end
