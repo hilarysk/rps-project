@@ -36,8 +36,7 @@ class Player
     @victories = {}
     @victories[@name] = 0  
     
-    @moves = {}
-    @moves[@name] = []             
+    @moves = []            
   end
   
   # Public: #move_total
@@ -53,18 +52,31 @@ class Player
   # Changes the value in @moves hash
   
   def move_total(move)
-    @moves[@name].push(move)
+    @moves.push(move)
     return @moves
   end
   
-  
   def show_move_total
-    @moves.each do |name, moves|
-      moves.each do |move|
-        return " #{move}"
-      end
-    end
+    @moves.join(", ")
   end
+  
+  
+  
+  
+  
+  # def show_move_total
+  #   @moves.each do |name, moves|
+  #     moves.each do |ind_move|
+  #      ind_move
+  #     end
+  #   end
+  # end
+  #
+  
+  
+  
+  
+  
   
   # Public: #victory_total
   # Updates the @victories value for the corresponding member player_name

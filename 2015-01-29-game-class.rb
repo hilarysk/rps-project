@@ -67,7 +67,7 @@ class Game < Player
       puts "How unoriginal. It's a tie."
 
     elsif @move1 == "rock" && @move2 == "paper"
-      puts "#uts{@app_name2}, you DESTROYED #{@app_name1} with the fierce fury of your .... paper."
+      puts "#{@app_name2}, you DESTROYED #{@app_name1} with the fierce fury of your .... paper."
       @player2.victory_total(1)
 
     elsif @move1 == "rock" && @move2 == "scissors"
@@ -101,8 +101,8 @@ class Game < Player
     puts "- Paper covers rock (in the words of Flula, this just doesn't make sense:"
     puts "\"This help a rock. Rock does not now have sunburn, rock can have bad hair day, and paper has helped out.\")"
     puts "So each player selects their item, and then we see who wins!"
+    puts ""
   end
-
   
 end
   
