@@ -2,20 +2,19 @@ require "pry"
 require_relative "2015-01-29-rps-player-class.rb"
 require_relative "2015-01-29-game-class.rb"
 
-#Start of game
-
-game = Game.new
 
 # Establish players
 
 puts "Player 1, what's your name?"
-name1 = gets.chomp.to_sym
+app_name1 = gets.chomp.to_sym
 
 puts "Player 2, what's your name?"
-name2 = gets.chomp.to_sym
+app_name2 = gets.chomp.to_sym
 
-player1 = Player.new(name1)
-player2 = Player.new(name2)
+@player1 = Player.new(app_name1)
+@player2 = Player.new(app_name2)
+
+game = Game.new(app_name1, app_name2, @player1, @player2)
 
 # Establish rules
 
@@ -26,52 +25,55 @@ if answer == ("yes" || "yeah" || "sure" || "duh" || "maybe" || "why not")
   game.print_rules
 end
 
+      # puts "All right, what are we thinking? Best out of 3? Best out of 5? Give me a number."
+      # match_num = gets.chomp.to_i
+      #
+      # #sets loop for match_num number of matches - need to make a method? but how?
+      #
+      # if match_num %2 != 0 && match_num > 0
+      #     match_num.times do
+      #       game.collect_moves
+      #       game.result
+      #     end
+      # else
+      #     print "Hmm, I don't think you entered a real number - or maybe you entered an even number (which doesn't really make sense if you're looking for a clear winner.) Try again?"
+      #     match_num = gets.chomp.to_i
+      #     if match_num %2 != 0 && match_num > 0
+      #         match_num.times do
+      #           game.collect_moves
+      #           game.result
+      #         end
+      #     end
+      # end
+
 # Collects moves
 
-puts "Player1, what's your move?"
-move1 = gets.chomp.downcase
+game.collect_moves
 
-puts "Player2, what's your move?"
-move2 = gets.chomp.downcase
+# Adds moves
 
-# Test move input
+@player1.move_total(@move1)
+@player2.move_total(@move2)
 
-game.are_moves_acceptable(move1, move2)
+# Game result
 
-# PRINT MOVES, THEN RESULT
+game.result
 
-# at end, show move totals and victory totals with methods from Player class
+puts "That was the last match. Final scores:"
+
+puts "#{app_name1}, your score is #{@player1.victory_total}."
+puts "#{app_name2}, your score is #{@player2.victory_total}."
+
+puts "Want to see which moves you made? Y or N."
+move_answer = gets.chomp
+
+if move_answer == "Y"
+  puts "#{app_name1}, you played #{@player1.show_move_total}."
+  puts "#{app_name2}, you played #{@player2.show_move_total}."
+else
+  puts "No problem. Thanks for playing!"
+end
 
 
-
-
-
-
-# if move_1 == move_2
-#   print "It's a tie!"
-#
-# elsif move_1 == "rock" && move_2 == "paper"
-#   print "Player 2 wins!"
-#
-# elsif move_1 == "rock" && move_2 == "scissors"
-#   print "Player 1 wins!"
-#
-# elsif move_1 == "paper" && move_2 == "rock"
-#   print "Player 1 wins!"
-#
-# elsif move_1 == "paper" && move_2 == "scissors"
-#   print "Player 2 wins!"
-#
-# elsif move_1 == "scissors" && move_2 == "paper"
-#   print "Player 1 wins!"
-#
-# elsif move_1 == "scissors" && move_2 == "rock"
-#   print "Player 2 wins!"
-#
-
-#
-# else
-#   print "Something went wrong ... we're sending the space monkeys into the computer to try and fix it."
-# end
 
 binding.pry

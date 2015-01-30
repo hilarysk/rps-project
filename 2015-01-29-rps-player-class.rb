@@ -55,6 +55,11 @@ class Player
   def move_total(move)
     @individual_move = move.to_s
     @moves[@name] = @individual_move.push
+    return @moves
+  end
+  
+  
+  def show_move_total
     return @moves[@name]
   end
   
@@ -70,7 +75,7 @@ class Player
   # State Changes:
   # Changes the value of @victories
   
-  def victory_total(win_num)
+  def victory_total(win_num=0)
     @victories[@name] += win_num.abs.to_i
     return @victories[@name]
   end
