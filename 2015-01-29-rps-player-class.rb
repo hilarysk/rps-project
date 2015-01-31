@@ -1,22 +1,25 @@
 require "pry" 
 
 # Class: Player
-#
 # Creates a player and sets their win total to 0; also creates hash to store moves. 
 #
 # Attributes:
-# @name      - Instance variable: represents the player's name
-# @victories - Hash: stores the player's total number of wins (initialized to 0) as the value to player 
-#              name key
-# @moves     - Hash: stores the player's moves in an array as the value to the player name key
+# @name        - Instance variable: represents the player's name
+# @score_sheet - Hash: stores the player's total number of wins (initialized to 0) and number of ties 
+#                (initialized to 0)
+# @moves       - Array: stores the player's moves
+# @wins        - Integer: represents the number of wins
+# @ties        - Integer: represents the number of ties
 #
 # Public Methods:
 # #move_total
-# #victory_total
+# #show_move_total
+# #add_win
+# #add_tie
 
 class Player
   
-  # Private?: #initialize
+  # Private: #initialize
   # Establishes primary instance variables when you instantiate the class.
   #
   # Parameters:
@@ -32,15 +35,14 @@ class Player
   
   def initialize(name)
     @name = name
-    
-    @victories = {}
-    @victories[@name] = 0  
-    
+    @wins = 0
+    @ties = 0
+    @score_sheet = {:wins=>@wins, :ties=>@ties}
     @moves = []            
   end
   
   # Public: #move_total
-  # Updates the array that occupies the value spot in the @moves hash
+  # Updates the array that occupies the value spot in the @moves array
   #
   # Parameters:
   # move - A string of the move the player made
@@ -49,53 +51,62 @@ class Player
   # The value for @moves hash
   #
   # State Changes:
-  # Changes the value in @moves hash
+  # Changes the value in @moves array
   
   def move_total(move)
     @moves.push(move)
     return @moves
   end
   
+  # Public: #show_move_total
+  # Returns a formatted list of the items contained in the @moves array
+  #
+  # Parameters:
+  # None
+  #
+  # Returns:
+  # A formatted list of the items contained in the @moves array
+  #
+  # State Changes:
+  # None
+  
   def show_move_total
     @moves.join(", ")
   end
   
-  
-  
-  
-  
-  # def show_move_total
-  #   @moves.each do |name, moves|
-  #     moves.each do |ind_move|
-  #      ind_move
-  #     end
-  #   end
-  # end
-  #
-  
-  
-  
-  
-  
-  
-  # Public: #victory_total
-  # Updates the @victories value for the corresponding member player_name
+  # Public: #add_win
+  # Updates the :wins value for the @score_sheet hash
   #
   # Parameters:
-  # win_num - Amount by which @victories value should increase
+  # win_num - Amount by which the win tally should increase
   #
   # Returns:
   # The player's total number of wins
   #
   # State Changes:
-  # Changes the value of @victories
+  # Changes the value of @scoresheet[:wins]
   
-  def victory_total(win_num=0)
-    @victories[@name] += win_num.abs.to_i
-    return @victories[@name]
+  def add_win(win_num=0)
+    @score_sheet[:wins] += win_num.abs.to_i
+    return @score_sheet[:wins]
   end
- 
   
+  # Public: #add_tie
+  # Updates the :ties value for the @score_sheet hash
+  #
+  # Parameters:
+  # tie_num - Amount by which the tie tally should increase
+  #
+  # Returns:
+  # The player's total number of ties
+  #
+  # State Changes:
+  # Changes the value of @scoresheet[:ties]
+  
+  def add_tie(tie_num=0)
+    @score_sheet[:ties] += tie_num.abs.to_i
+    return @score_sheet[:ties]
+  end
 end
 
 binding.pry

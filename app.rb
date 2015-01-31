@@ -18,43 +18,37 @@ game = Game.new(app_name1, app_name2, @player1, @player2)
 
 # Establish rules
 
-puts "Do you need a refresher on the rules?"
+puts "Do you need a refresher on the rules? Y or N."
 answer = gets.chomp.downcase
 
-if (answer == "yes" || answer == "y") || (answer == "yeah" || answer == "sure") || (answer == "duh" || answer == "maybe") || answer == "why not"
+if answer == "y"
+  puts ""
   game.print_rules
 end
 
+puts ""
 
+# Establish best-of number
 
-puts "All right, what are we thinking? Best out of 3? Best out of 5? Give me a number."
+print "All right, what are we thinking? Best out of 3? Best out of 6? Give me a number:"
 match_num = gets.chomp.to_i
 
-#sets loop for match_num number of matches - need to make a method? but how?
-
-if match_num %2 != 0 && match_num > 0
-    match_num.times do
-      game.collect_moves
-      game.add_moves
-      game.result
-    end
-else
-    print "Hmm, I don't think you entered a real number - or maybe you entered an even number (which doesn't really make sense if you're looking for a clear winner.) Try again?"
-    match_num = gets.chomp.to_i
-    if match_num %2 != 0 && match_num > 0
-        match_num.times do
-          game.collect_moves
-          game.add_moves
-          game.result
-        end
-    end
+until match_num > 0
+  print "Has to be a number bigger than 0 (duh):"
+  match_num = gets.chomp.to_i
 end
+
+# Sets loop 
+
+game.best_of_loop(match_num, game)
+
+# Deliver results
 
 puts ""
 puts "That was the last match. Final scores:"
-
-puts "#{app_name1}, your score is #{@player1.victory_total}."
-puts "#{app_name2}, your score is #{@player2.victory_total}."
+puts "#{app_name1}, your score is:\nWins: #{@player1.add_win}, Ties: #{@player1.add_tie}."
+puts ""
+puts "#{app_name2}, your score is:\nWins: #{@player2.add_win}, Ties: #{@player2.add_tie}."
 
 puts "Want to see which moves you made? Y or N."
 move_answer = gets.chomp.downcase
@@ -62,6 +56,7 @@ move_answer = gets.chomp.downcase
 if move_answer == "y"
   puts "#{app_name1}, you played #{@player1.show_move_total}."
   puts "#{app_name2}, you played #{@player2.show_move_total}."
+  puts ""
   puts "Thanks for playing!"
 else
   puts "No problem. Thanks for playing!"
