@@ -3,63 +3,25 @@ require_relative "2015-01-29-rps-player-class.rb"
 require_relative "2015-01-29-game-class.rb"
 
 
-# Establish players
+# 1. The driver method is doing too much -- really, all it should do is create two players, tell them to play until they’re done (this should be a single method call), and then report the winner. Make this happen by way of creating a Game class; the driver method creates two players, creates the game, gives the players to the game, then tells the game to start. When the game is done, it reports its result back to the driver class. The only methods of the Game class that your driver should ever see are new and play. It is very likely that your Game class will have other methods, but the only methods that your driver should ever interact with are new and play.
+# 2. As the Game class currently stands, both it and the players must know the rules for Rock-Paper-Scissors (players must know the list of possible moves, and the game must be able to determine who won a given round). Make it such that the Game class provides each player with a list of valid moves at the start of the game; then the players are responsible for simply making sure that whatever input they get from the user is included in that list of valid moves. Now the player objects don't need to know anything about the game they're playing other than the set of allowed moves.
+# 3. The Game class is still doing too much (running the game, comparing player moves, etc.). Let’s create a Rules class to which we can delegate the job of comparing moves to determine the round winner, and to which we can delegate the job of holding the list of valid moves. This means that neither the Game class nor the Player class will have to know anything about the rules of the game; they'll only have to be able to prompt the Rules class to settle things.
+
+
+# Establish players - could maybe make this part of initialize method? 
 
 puts "Player 1, what's your name?"
-app_name1 = gets.chomp.to_sym
+app_name1 = gets.chomp
 
 puts "Player 2, what's your name?"
-app_name2 = gets.chomp.to_sym
+app_name2 = gets.chomp
 
 @player1 = Player.new(app_name1)
 @player2 = Player.new(app_name2)
 
-game = Game.new(app_name1, app_name2, @player1, @player2)
+this_game = Game.new(app_name1, app_name2, @player1, @player2)
 
-# Establish rules
+this_game.play_game(this_game)
 
-puts "Do you need a refresher on the rules? Y or N."
-answer = gets.chomp.downcase
-
-if answer == "y"
-  puts ""
-  game.print_rules
-end
-
-puts ""
-
-# Establish best-of number
-
-print "All right, what are we thinking? Best out of 3? Best out of 6? Give me a number:"
-match_num = gets.chomp.to_i
-
-until match_num > 0
-  print "Has to be a number bigger than 0 (duh):"
-  match_num = gets.chomp.to_i
-end
-
-# Sets loop 
-
-game.best_of_loop(match_num, game)
-
-# Deliver results
-
-puts ""
-puts "That was the last match. Final scores:"
-puts "#{app_name1}, your score is:\nWins: #{@player1.add_win}, Ties: #{@player1.add_tie}."
-puts ""
-puts "#{app_name2}, your score is:\nWins: #{@player2.add_win}, Ties: #{@player2.add_tie}."
-
-puts "Want to see which moves you made? Y or N."
-move_answer = gets.chomp.downcase
-
-if move_answer == "y"
-  puts "#{app_name1}, you played #{@player1.show_move_total}."
-  puts "#{app_name2}, you played #{@player2.show_move_total}."
-  puts ""
-  puts "Thanks for playing!"
-else
-  puts "No problem. Thanks for playing!"
-end
 
 binding.pry

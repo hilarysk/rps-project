@@ -31,7 +31,7 @@ class Player
   # State Changes:
   # Sets @name, @victories and @moves
 
-  attr_accessor :name, :victories, :moves
+  attr_accessor :name, :score_sheet, :moves
   
   def initialize(name)
     @name = name
