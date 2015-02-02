@@ -20,7 +20,6 @@ require_relative "2015-02-01-psrls-class.rb"
 # #collect_moves
 # #add_moves
 # #result
-# #print_rules
 # #print_move_array
 
 class Game < Player
