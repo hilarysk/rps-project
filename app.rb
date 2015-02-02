@@ -2,8 +2,6 @@ require "pry"
 require_relative "2015-01-29-rps-player-class.rb"
 require_relative "2015-01-29-game-class.rb"
 
-
-
 # Get players' names
 
 puts "Player 1, what's your name?"

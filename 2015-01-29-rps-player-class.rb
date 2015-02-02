@@ -1,5 +1,3 @@
-require "pry" 
-
 # Class: Player
 # Creates a player and sets their win total to 0; also creates hash to store moves. 
 #
@@ -108,5 +106,3 @@ class Player
     return @score_sheet[:ties]
   end
 end
-
-binding.pry

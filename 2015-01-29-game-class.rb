@@ -1,6 +1,6 @@
-require "pry"
 require_relative "2015-01-29-rps-player-class.rb"
 require_relative "2015-01-29-rules-class.rb"
+require_relative "2015-02-01-psrls-class.rb"
 
 # Class: Game
 #
@@ -64,14 +64,13 @@ class Game < Player
   def get_game_choice
     puts "What game would you like to play?"
     puts "For Paper Scissors Rock, type 1 and hit enter."
-    #puts "For Tic-Tac-Toe, type 2 and hit enter."
-    #puts "For Paper, Scissors, Rock, Lizard, Spock, type 3 and hit enter."
+    puts "For Paper, Scissors, Rock, Lizard, Spock, type 2 and hit enter."
 
     @game_choice = gets.chomp.to_i
     
-      until @game_choice == 1 #|| @game_choice == 2 || game_choice == 3
-        puts "Oops, let's try again. Enter \"1\" for Paper Scissors Rock" #"or \"2\" for Tic-Tac-Toe or \"3\" for Paper, 
-        @game_choice = gets.chomp.to_i                                    #Scissors, Rock, Lizard, Spock:"
+      until @game_choice == 1 || @game_choice == 2 
+        puts "Oops, let's try again. Enter \"1\" for Paper Scissors Rock or \"2\" for Paper, Scissors, Rock, Lizard, Spock:" 
+        @game_choice = gets.chomp.to_i                                    
       end
   end
   
@@ -90,8 +89,8 @@ class Game < Player
   def instantiate_rules
     if @game_choice == 1
       @rules_instance = PSR_rules.new(@app_name1, @app_name2, @player1, @player2)
-    else 
-      @rules_instance = TTT_rules.new
+    else
+      @rules_instance = PSRLS_rules.new(@app_name1, @app_name2, @player1, @player2)
     end
   end
   
@@ -246,6 +245,3 @@ class Game < Player
   end
   
 end
-  
-binding.pry
-  

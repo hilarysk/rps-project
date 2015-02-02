@@ -1,7 +1,6 @@
-require "pry"
 require_relative "2015-01-29-rps-player-class.rb"
 require_relative "2015-01-29-game-class.rb"
-require_relative "2015-01-29-rules-class.rb"
+
 
 
 # Class: PSR_rules
@@ -35,7 +34,7 @@ class PSR_rules
   # Instantiation of PSR_rules
   #
   # State Changes:
-  # Sets @name, @victories and @moves
+  # Sets @app_name1, @app_name2, @player1, @player2 and @possible_moves
   
   def initialize(app_name1, app_name2, player1, player2)
     @app_name1 = app_name1
@@ -93,10 +92,10 @@ class PSR_rules
     if @possible_moves.include?(@move2) == false && @possible_moves.include?(@move1) == false
       puts "RESULT: You're both hopeless. EVERYONE LOSES. (Except for me.)"
     elsif @possible_moves.include?(@move2) == false
-      puts "RESULT: \"#{@move2}\"???? P-a-p-e-r, s-c-i-s-s-o-r-s or r-o-c-k. That's it, #{@app_name2}. #{@app_name1.capitalize} wins by default of your incompetence."
+      puts "RESULT: \"#{@move2}\"???? P-a-p-e-r, s-c-i-s-s-o-r-s or r-o-c-k. That's it, #{@app_name2}. #{@app_name1.capitalize} wins by default."
       @player1.add_win(1)
     elsif @possible_moves.include?(@move1) == false
-      puts "RESULT: Dude, your only options are p-a-p-e-r, s-c-i-s-s-o-r-s or r-o-c-k. None of this \"#{@move1}\" nonsense. #@app_name2.capitalize} wins because duh."
+      puts "RESULT: Dude, your only options are p-a-p-e-r, s-c-i-s-s-o-r-s or r-o-c-k. None of this \"#{@move1}\" nonsense. #{@app_name2.capitalize} wins by default."
       @player2.add_win(1)
     end
   end 
@@ -122,7 +121,7 @@ class PSR_rules
     if @move1 == @move2
       puts "RESULT: How unoriginal. It's a tie."
       @player1.add_tie(1)
-      @player2.add_tie(2)
+      @player2.add_tie(1)
     elsif @move1 == "paper"
       if @move2 == "rock"
         puts "RESULT: #{@app_name1.capitalize}, you are a CHAMP. A champ, I say. Would you like to be the guest of honor at my next dinner party? (#{@app_name2.capitalize}, you're not invited."
@@ -151,5 +150,3 @@ class PSR_rules
   end
   
 end
-
-binding.pry
