@@ -1,7 +1,3 @@
-
-# 3. The Game class is still doing too much (running the game, comparing player moves, etc.). Let’s create a Rules class to which we can delegate the job of comparing moves to determine the round winner, and to which we can delegate the job of holding the list of valid moves. This means that neither the Game class nor the Player class will have to know anything about the rules of the game; they'll only have to be able to prompt the Rules class to settle things.
-
-
 require "pry"
 require_relative "2015-01-29-rps-player-class.rb"
 require_relative "2015-01-29-rules-class.rb"
@@ -17,6 +13,8 @@ require_relative "2015-01-29-rules-class.rb"
 # @player2   - Object: another instantiation of class Player
 #
 # Public Methods:
+# #get_game_choice
+# #instantiate_rules
 # #get_match_num
 # #best_of_loop
 # #collect_moves
@@ -25,10 +23,9 @@ require_relative "2015-01-29-rules-class.rb"
 # #print_rules
 # #print_move_array
 
-
 class Game < Player
   
-  attr_accessor :app_name1, :app_name2, :player1, :player2 :rules_instance
+  attr_accessor :app_name1, :app_name2, :player1, :player2, :rules_instance
   
   # Private: #initialize
   # Establishes primary instance variables when you instantiate the class.
@@ -40,33 +37,80 @@ class Game < Player
   # @player2   - Object: another instantiation of class Player
   #
   # Returns:
-  # ?
+  # Instantiation of Game
   #
   # State Changes:
   # Sets @name, @victories and @moves
   
-  def initialize(app_name1, app_name2, player1, player2, rules_instance)
+  def initialize(app_name1, app_name2, player1, player2)
     @app_name1 = app_name1
     @app_name2 = app_name2
     @player1 = player1
     @player2 = player2 
-    @rules_instance = rules_instance
+  end
+  
+  # Public: #get_game_choice
+  # Asks user which game they want to play (setting up )
+  #
+  # Parameters:
+  # None
+  #
+  # Returns:
+  # Nil
+  #
+  # State Changes:
+  # Sets the value for @game_choice
+
+  def get_game_choice
+    puts "What game would you like to play?"
+    puts "For Paper Scissors Rock, type 1 and hit enter."
+    #puts "For Tic-Tac-Toe, type 2 and hit enter."
+    #puts "For Paper, Scissors, Rock, Lizard, Spock, type 3 and hit enter."
+
+    @game_choice = gets.chomp.to_i
+    
+      until @game_choice == 1 #|| @game_choice == 2 || game_choice == 3
+        puts "Oops, let's try again. Enter \"1\" for Paper Scissors Rock" #"or \"2\" for Tic-Tac-Toe or \"3\" for Paper, 
+        @game_choice = gets.chomp.to_i                                    #Scissors, Rock, Lizard, Spock:"
+      end
+  end
+  
+  # Public: #instantiate_rules
+  # Creates an instance of whichever Rules class is necessary to play the game selected by the users
+  #
+  # Parameters:
+  # None
+  #
+  # Returns:
+  # Instantiation of a Rules class
+  #
+  # State Changes:
+  # Sets the value for @rules_instance
+
+  def instantiate_rules
+    if @game_choice == 1
+      @rules_instance = PSR_rules.new(@app_name1, @app_name2, @player1, @player2)
+    else 
+      @rules_instance = TTT_rules.new
+    end
   end
   
   # Public: #play_game
   # Basically a method of methods - runs the Game class methods in the proper order
   #
   # Parameters:
-  # this_game - The instantiation of Game class being used in the driver (app.rb)
+  # game_instance - The instantiation of Game class being used in the driver (app.rb)
   #
   # Returns:
-  # ?
+  # Nil
   #
   # State Changes:
-  # None
+  # Sets the value for @game_instance
   
   def play_game(game_instance)
     @game_instance = game_instance
+    @game_instance.get_game_choice
+    @game_instance.instantiate_rules
     @rules_instance.print_rules
     @game_instance.get_match_num
     @game_instance.best_of_loop
@@ -81,10 +125,10 @@ class Game < Player
   # None
   #
   # Returns:
-  # ?
+  # Nil
   #
   # State Changes:
-  # None
+  # Sets @match_num
   
   def get_match_num
     print "All right, what are we thinking? Best out of 3? Best out of 6? Give me a number:"
@@ -104,7 +148,7 @@ class Game < Player
   # game - Instatiation of the Game class
   #
   # Returns:
-  # ?
+  # Nil
   #
   # State Changes:
   # None
@@ -114,10 +158,11 @@ class Game < Player
     until @player1.add_win == winner || @player2.add_win == winner
       @game_instance.collect_moves
       @game_instance.add_moves
-      @rules_instance.judge_game(@move1, @move2, @app_name1, @app_name2)
+      @rules_instance.check_if_moves_are_valid(@move1, @move2)
+      @rules_instance.judge_game(@move1, @move2)
     end
   end
-  
+
   # Public: #collect_moves
   # Gets moves from the players
   #
@@ -125,7 +170,7 @@ class Game < Player
   # None
   #
   # Returns:
-  # value of move2?
+  # Nil
   #
   # State Changes:
   # Creates instance variables @move1 and @move2 and assigns values to them
@@ -144,19 +189,15 @@ class Game < Player
   # None
   #
   # Returns:
-  # @moves array for @player2?
+  # ?
   #
   # State Changes:
-  # Updates @moves array
+  # Updates @moves array in the Player class
   
   def add_moves
     @player1.move_total(@move1)
     @player2.move_total(@move2)
-  end
-    
-
-       
-       
+  end 
   
   # Public: #deliver_results
   # Outputs the results to the console
@@ -165,7 +206,7 @@ class Game < Player
   # None
   #
   # Returns:
-  # ?
+  # Nil
   #
   # State Changes:
   # None
@@ -185,7 +226,7 @@ class Game < Player
   # None
   #
   # Returns:
-  # ?
+  # Nil
   #
   # State Changes:
   # None
@@ -205,10 +246,6 @@ class Game < Player
   end
   
 end
-  
-
-
-
   
 binding.pry
   

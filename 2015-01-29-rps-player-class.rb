@@ -26,10 +26,10 @@ class Player
   # name - name of the new player
   #
   # Returns:
-  # ?
+  # Instantiation of Player
   #
   # State Changes:
-  # Sets @name, @victories and @moves
+  # Sets @name, @score_sheet, @wins, @ties and @moves
 
   attr_accessor :name, :score_sheet, :moves
   
